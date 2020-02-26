@@ -1,0 +1,26 @@
+{% extends 'app/weather/base.html' %}
+{% block content %}
+
+<div class="container">
+    <h1 class="text-center">Weather</h1>
+    <form class="form-inline" method="POST" style="display: flex; justify-content: center; margin-top: 40px ">
+      {% csrf_token %}
+      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Preference</label>
+      <select class="custom-select my-1 mr-sm-2" name="city">
+        <option value="">Select your city</option>
+        {% for city in City %}
+            <option value="{{ city.name }}">{{ city.name }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="btn btn-primary my-1">Submit</button>
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} text-center">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}

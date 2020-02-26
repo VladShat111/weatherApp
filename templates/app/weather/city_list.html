@@ -1,0 +1,68 @@
+{% extends 'app/weather/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <h1 class="text-center">List of cities</h1>
+
+    <form class="form form-group" method="GET">
+        {{ my_filter.form|crispy}}
+        <button class="btn btn-outline-success"  type="submit">Search</button>
+    </form>
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">City</th>
+          <th scope="col">Country</th>
+          <th scope="col">Sky</th>
+          <th scope="col">Description</th>
+          <th scope="col">Temperature</th>
+          <th scope="col">Min temperature</th>
+          <th scope="col">Max temperature</th>
+          <th scope="col">Pressure</th>
+          <th scope="col">Visibility</th>
+          <th scope="col">Wind speed</th>
+          <th scope="col">Sunrise</th>
+          <th scope="col">Sunset</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for city in cities %}
+        <tr>
+          <th scope="row">{{ city.pk }}</th>
+          <td>{{ city.name }}</td>
+          <td>{{ city.country }}</td>
+          <td>{{ city.sky }}</td>
+          <td>{{ city.description }}</td>
+          <td>{{ city.temperature }}</td>
+          <td>{{ city.min_temperature }}</td>
+          <td>{{ city.max_temperature }}</td>
+          <td>{{ city.pressure }}</td>
+          <td>{{ city.visibility }}</td>
+          <td>{{ city.wind_speed }}</td>
+          <td>{{ city.sunrise }}</td>
+          <td>{{ city.sunset }}</td>
+          <td>{{ city.date }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            {% if cities.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ cities.previous_page_number}}">Previous</a>
+            {% endif %}
+            {% if cities.has_next %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ cities.next_page_number }}">Next</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ cities.paginator.num_pages}}">Last</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
